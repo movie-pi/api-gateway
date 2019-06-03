@@ -11,7 +11,8 @@ steps:
       - source: sonar_token
         target: SONAR_TOKEN
     volumes:
-      - sonar-cache:/root/.sonar/cache
+      - name: sonar-cache
+        path: sonar-cache:/root/.sonar/cache
     commands:
       - >
         sonar-scanner
