@@ -1,5 +1,33 @@
 kind: pipeline
-name: default
+name: sonar-test
+
+workspace:
+  base: /build
+
+steps:
+  - name: sonarqube
+    image: newtmitch/sonar-scanner
+    secrets:
+      - source: sonar_token
+        target: SONAR_TOKEN
+    volumes:
+      - sonar-cache:/root/.sonar/cache
+    commands:
+      - >
+        sonar-scanner
+        -Dsonar.projectName=${DRONE_REPO}
+        -Dsonar.host.url=https://sonarhub.serveo.net
+        -Dsonar.projectKey=api-gateway:${DRONE_BRANCH}
+        -Dsonar.projectVersion=${DRONE_COMMIT}
+        -Dsonar.projectBaseDir=.
+
+trigger:
+  branch:
+    exclude:
+      - master
+
+kind: pipeline
+name: build-image
 
 workspace:
   base: /build
@@ -11,7 +39,3 @@ steps:
       - pwd
       - ls
       - ls -R
-
-trigger:
-  repo:
-  - movie-pi/api-gateway
