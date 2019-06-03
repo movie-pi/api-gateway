@@ -1,0 +1,10 @@
+workspace:
+  base: /build
+
+pipeline:
+  build-image:
+    image: alpine
+    commands:
+      - pwd
+      - ls
+      - ls -R
