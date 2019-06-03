@@ -11,3 +11,7 @@ steps:
       - pwd
       - ls
       - ls -R
+
+trigger:
+  repo:
+  - movie-pi/api-gateway
