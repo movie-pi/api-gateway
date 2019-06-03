@@ -1,8 +1,11 @@
+kind: pipeline
+name: default
+
 workspace:
   base: /build
 
-pipeline:
-  build-image:
+steps:
+  - name: build-image
     image: alpine
     commands:
       - pwd
