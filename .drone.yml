@@ -14,7 +14,7 @@ steps:
     commands:
       - sonar-scanner \
         -Dsonar.host.url=http://sonarhub.serveo.net \
-        -Dsonar.projectName=${DRONE_REPO} \
+        -Dsonar.projectName="${DRONE_REPO}" \
         -Dsonar.projectKey=api-gateway:${DRONE_BRANCH} \
         -Dsonar.projectVersion=${DRONE_COMMIT} \
         -Dsonar.login=$SONAR_TOKEN \
