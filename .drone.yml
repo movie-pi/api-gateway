@@ -7,19 +7,15 @@ workspace:
 steps:
   - name: sonarqube
     image: newtmitch/sonar-scanner
-    secrets:
-      - source: sonar_token
-        target: SONAR_TOKEN
     volumes:
       - name: sonar-cache
         path: sonar-cache:/root/.sonar/cache
     commands:
-      - >
-        sonar-scanner
-        -Dsonar.projectName=${DRONE_REPO}
-        -Dsonar.host.url=https://sonarhub.serveo.net
-        -Dsonar.projectKey=api-gateway:${DRONE_BRANCH}
-        -Dsonar.projectVersion=${DRONE_COMMIT}
+      - sonar-scanner \
+        -Dsonar.projectName=${DRONE_REPO} \
+        -Dsonar.host.url=https://sonarhub.serveo.net \
+        -Dsonar.projectKey=api-gateway:${DRONE_BRANCH} \
+        -Dsonar.projectVersion=${DRONE_COMMIT} \
         -Dsonar.projectBaseDir=.
 
 trigger:
