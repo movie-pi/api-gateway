@@ -12,13 +12,13 @@ steps:
       SONAR_TOKEN:
         from_secret: sonar-token
     commands:
-      - sonar-scanner \
+      - -Dsonar.host.url=http://sonarhub.serveo.net \
         -Dsonar.projectName=${DRONE_REPO} \
-        -Dsonar.host.url=https://sonarhub.serveo.net \
         -Dsonar.projectKey=api-gateway:${DRONE_BRANCH} \
         -Dsonar.projectVersion=${DRONE_COMMIT} \
         -Dsonar.login=$SONAR_TOKEN \
-        -Dsonar.projectBaseDir=.
+        -Dsonar.projectBaseDir=. \
+        -Dsonar.sources=.
 
 ---
 kind: pipeline
