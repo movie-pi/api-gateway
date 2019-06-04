@@ -35,5 +35,4 @@ steps:
     commands:
       - pwd
       - ls
-      - ls -R
       - go run main.go
