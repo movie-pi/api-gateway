@@ -6,22 +6,19 @@ workspace:
   base: /build
 
 steps:
-  - name: sonarqube
+  - name: sonar-test
     image: newtmitch/sonar-scanner
-    volumes:
-      - name: sonar-cache
-        path: sonar-cache:/root/.sonar/cache
+    environment:
+      SONAR_TOKEN:
+        from_secret: sonar-token
     commands:
       - sonar-scanner \
         -Dsonar.projectName=${DRONE_REPO} \
         -Dsonar.host.url=https://sonarhub.serveo.net \
         -Dsonar.projectKey=api-gateway:${DRONE_BRANCH} \
         -Dsonar.projectVersion=${DRONE_COMMIT} \
+        -Dsonar.login=$SONAR_TOKEN \
         -Dsonar.projectBaseDir=.
-
-volumes:
-- name: sonar-cache
-  temp: {}
 
 ---
 kind: pipeline
@@ -37,4 +34,3 @@ steps:
       - pwd
       - ls
       - ls -R
----
