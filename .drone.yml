@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: sonar-test
 
@@ -5,28 +6,24 @@ workspace:
   base: /build
 
 steps:
-  - name: sonarqube
-    image: newtmitch/sonar-scanner
-    secrets:
-      - source: sonar_token
-        target: SONAR_TOKEN
-    volumes:
-      - name: sonar-cache
-        path: sonar-cache:/root/.sonar/cache
+  - name: sonar-test
+    image: newtmitch/sonar-scanner:3.3.0
+    environment:
+      SONAR_TOKEN:
+        from_secret: sonar-token
     commands:
       - >
         sonar-scanner
+        -Dsonar.host.url=http://sonarhub.serveo.net
         -Dsonar.projectName=${DRONE_REPO}
-        -Dsonar.host.url=https://sonarhub.serveo.net
-        -Dsonar.projectKey=api-gateway:${DRONE_BRANCH}
+        -Dsonar.projectKey=api-gateway
         -Dsonar.projectVersion=${DRONE_COMMIT}
+        -Dsonar.branch.name=${DRONE_BRANCH}
+        -Dsonar.login=$SONAR_TOKEN
         -Dsonar.projectBaseDir=.
+        -Dsonar.sources=.
 
-trigger:
-  branch:
-    exclude:
-      - master
-
+---
 kind: pipeline
 name: build-image
 
@@ -35,8 +32,8 @@ workspace:
 
 steps:
   - name: build-image
-    image: alpine
+    image: golang:1.12-alpine3.9
     commands:
       - pwd
       - ls
-      - ls -R
+      - go run main.go
