@@ -18,6 +18,7 @@ steps:
         -Dsonar.projectName=${DRONE_REPO}
         -Dsonar.projectKey=api-gateway
         -Dsonar.projectVersion=${DRONE_COMMIT}
+        -Dsonar.branch.name=${DRONE_BRANCH}
         -Dsonar.login=$SONAR_TOKEN
         -Dsonar.projectBaseDir=.
         -Dsonar.sources=.
