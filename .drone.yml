@@ -16,7 +16,7 @@ steps:
         sonar-scanner
         -Dsonar.host.url=http://sonarhub.serveo.net
         -Dsonar.projectName=${DRONE_REPO}
-        -Dsonar.projectKey=api-gateway:${DRONE_BRANCH}
+        -Dsonar.projectKey=api-gateway::$(echo "$DRONE_BRANCH" | tr / :)
         -Dsonar.projectVersion=${DRONE_COMMIT}
         -Dsonar.login=$SONAR_TOKEN
         -Dsonar.projectBaseDir=.
