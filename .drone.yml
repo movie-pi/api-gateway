@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: sonar-test
 
@@ -18,11 +19,11 @@ steps:
         -Dsonar.projectVersion=${DRONE_COMMIT} \
         -Dsonar.projectBaseDir=.
 
-trigger:
-  branch:
-    exclude:
-      - master
+volumes:
+- name: sonar-cache
+  temp: {}
 
+---
 kind: pipeline
 name: build-image
 
@@ -36,7 +37,4 @@ steps:
       - pwd
       - ls
       - ls -R
-
-trigger:
-  repo:
-  - movie-pi/api-gateway
+---
