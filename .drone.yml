@@ -35,8 +35,12 @@ workspace:
 
 steps:
   - name: build-image
-    image: alpine
+    image: golang:1.12-alpine3.9
     commands:
       - pwd
       - ls
       - ls -R
+
+trigger:
+  repo:
+  - movie-pi/api-gateway
